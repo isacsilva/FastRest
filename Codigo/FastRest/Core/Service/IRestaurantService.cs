@@ -9,7 +9,7 @@ namespace Core.Service
 {
     public interface IRestaurantService
     {
-        Restaurant Obiter(Restaurant restaurant);
+        Restaurant Obter(int idRestaurant);
 
         IEnumerable<Restaurant> ObterTodos();
     }

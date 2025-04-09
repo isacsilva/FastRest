@@ -49,10 +49,5 @@ namespace Service
 
             return produtos.ElementAtOrDefault(0);
         }
-
-        public Restaurant Obiter(Restaurant restaurane)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

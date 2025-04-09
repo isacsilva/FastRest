@@ -123,14 +123,5 @@ namespace Service
             IEnumerable<Product> produto = GetQuery().Where(ProdutoModel => ProdutoModel.Name.StartsWith(nome));
             return produto;
         }
-
-        /// <summary>
-		/// Consulta por nome aos dados do produto com ordem decrecente
-		/// </summary>
-		/// <returns></returns>
-        public IEnumerable<ProductDTO> ObterPorNomeOrdenadoDescending(string nome)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

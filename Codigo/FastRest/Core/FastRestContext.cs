@@ -30,6 +30,7 @@ namespace Core
             //}
         }
 
+        [Obsolete]
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Menucategory>(entity =>

@@ -15,12 +15,10 @@ namespace Core.Service
 
         Product Obter(int idProduct);
 
-        IEnumerable<Product> ObterPorNome(String Nome);
+        IEnumerable<Product> ObterPorNome(string Nome);
 
         IEnumerable<Product> ObterTodos();
 
-        void Remover(int idAutor);
-
-        IEnumerable<ProductDTO> ObterPorNomeOrdenadoDescending(String Nome);
+        void Remover(int idProduct);
     }
 }

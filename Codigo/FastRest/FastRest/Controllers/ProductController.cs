@@ -78,6 +78,7 @@ namespace FastRest.Controllers
             Product produto = _produtoService.Obter(id);
             ProductModel produtoModel = _mapper.Map<ProductModel>(produto);
             return View(produtoModel);
+
         }
 
         // POST: ProductController/Edit/5

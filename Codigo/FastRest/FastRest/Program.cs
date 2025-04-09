@@ -20,6 +20,10 @@ namespace FastRest
             // injecao dependencia Services
             builder.Services.AddTransient<IProductService, ProductService>();
             builder.Services.AddTransient<IRestaurantService, RestaurantService>();
+            builder.Services.AddTransient<IOrdertableService, OrdertableService>();
+            builder.Services.AddTransient<IOrderproductsService, OrderproductsService>();
+            builder.Services.AddTransient<IRestaurantService, RestaurantService>();
+            builder.Services.AddTransient<IMenucategoryService, MenucategoryService>();
 
             // injecao dependencia mappers
             builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
