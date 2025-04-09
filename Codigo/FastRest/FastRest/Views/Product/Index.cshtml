@@ -30,9 +30,6 @@
             <th>
                 @Html.DisplayNameFor(model => model.MenuCategoryId)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.UpdatedAt)
-            </th>
             <th></th>
         </tr>
     </thead>
@@ -56,10 +53,7 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.MenuCategoryId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.UpdatedAt)
-            </td>
+            </td
             <td>
                 @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
                 @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |

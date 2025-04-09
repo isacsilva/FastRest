@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Isac\\Desktop\\FastRest\\Core\\Core.csproj": {}
+    "C:\\Users\\Isac\\Desktop\\FastRest\\Codigo\\FastRest\\Core\\Core.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Isac\\Desktop\\FastRest\\Core\\Core.csproj": {
+    "C:\\Users\\Isac\\Desktop\\FastRest\\Codigo\\FastRest\\Core\\Core.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Isac\\Desktop\\FastRest\\Core\\Core.csproj",
+        "projectUniqueName": "C:\\Users\\Isac\\Desktop\\FastRest\\Codigo\\FastRest\\Core\\Core.csproj",
         "projectName": "Core",
-        "projectPath": "C:\\Users\\Isac\\Desktop\\FastRest\\Core\\Core.csproj",
+        "projectPath": "C:\\Users\\Isac\\Desktop\\FastRest\\Codigo\\FastRest\\Core\\Core.csproj",
         "packagesPath": "C:\\Users\\Isac\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Isac\\Desktop\\FastRest\\Core\\obj\\",
+        "outputPath": "C:\\Users\\Isac\\Desktop\\FastRest\\Codigo\\FastRest\\Core\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -48,11 +48,17 @@
               "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
               "suppressParent": "All",
               "target": "Package",
-              "version": "[3.1.10, )"
+              "version": "[7.0.20, )"
             },
-            "MySql.Data.EntityFrameworkCore": {
+            "Microsoft.EntityFrameworkCore.Tools": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
               "target": "Package",
-              "version": "[8.0.20, )"
+              "version": "[7.0.20, )"
+            },
+            "MySql.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[7.0.16, )"
             }
           },
           "imports": [

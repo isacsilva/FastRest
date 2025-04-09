@@ -50,7 +50,7 @@ namespace Service
         /// <returns></returns>
         public IEnumerable<Product> ObterTodos()
         {
-            return GetQuery();
+            return _context.Product.AsNoTracking();
         }
         /// <summary>
         /// Retorna o número de produtos cadastrados
