@@ -5,32 +5,51 @@ using System.Text;
 using System.Text.Json;
 using System.Threading;
 using Core.DTO;
+using Core.Service;
 
 namespace Core.Server
 {
     public class PeerServer
     {
-        public static void Main()
+        private static TcpListener _servidor;
+        private static bool _emExecucao = false;
+
+        public static void Start(int porta = 5050)
         {
+            if (_emExecucao) return; // evita iniciar duas vezes
 
-            int porta = 5000;
-            TcpListener servidor = new TcpListener(IPAddress.Any, porta);
-            servidor.Start();
-            Console.WriteLine("[Servidor] Iniciado na porta " + porta);
+            _servidor = new TcpListener(IPAddress.Any, porta);
+            _servidor.Start();
+            _emExecucao = true;
 
-            while (true)
+            Console.WriteLine($"[Servidor] Iniciado na porta {porta}");
+
+            Thread threadServidor = new Thread(() =>
             {
-                TcpClient cliente = servidor.AcceptTcpClient();
-                Console.WriteLine("[Servidor] Novo cliente conectado.");
+                while (true)
+                {
+                    try
+                    {
+                        TcpClient cliente = _servidor.AcceptTcpClient();
+                        Console.WriteLine("[Servidor] Novo cliente conectado.");
 
-                Thread t = new Thread(() => TratarCliente(cliente));
-                t.Start();
-            }
+                        Thread t = new Thread(() => TratarCliente(cliente));
+                        t.Start();
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine("[Servidor] Erro ao aceitar cliente: " + ex.Message);
+                    }
+                }
+            });
+
+            threadServidor.IsBackground = true;
+            threadServidor.Start();
         }
 
-        static void TratarCliente(TcpClient cliente)
+        private static void TratarCliente(TcpClient cliente)
         {
-            NetworkStream stream = cliente.GetStream();
+            using NetworkStream stream = cliente.GetStream();
             byte[] buffer = new byte[1024];
 
             try
@@ -40,13 +59,13 @@ namespace Core.Server
 
                 Console.WriteLine($"[Servidor] Dados recebidos: {jsonRecebido}");
 
-                var pedido = JsonSerializer.Deserialize<OrderStatusUpdateDTO>(jsonRecebido);
+                var orderUpdate = JsonSerializer.Deserialize<OrderStatusUpdateDTO>(jsonRecebido);
 
-                if (pedido != null)
+                if (orderUpdate != null)
                 {
-                    AtualizarStatusNoBanco(pedido.IdPedido, pedido.Status);
+                    AtualizarStatus(orderUpdate.IdPedido, orderUpdate.Status);
 
-                    string resposta = $"Status do pedido #{pedido.IdPedido} atualizado para '{pedido.Status}'";
+                    string resposta = $"Status do pedido #{orderUpdate.IdPedido} atualizado para '{orderUpdate.Status}'";
                     byte[] respostaBytes = Encoding.UTF8.GetBytes(resposta);
                     stream.Write(respostaBytes, 0, respostaBytes.Length);
                 }
@@ -62,15 +81,23 @@ namespace Core.Server
             cliente.Close();
         }
 
-        static void AtualizarStatusNoBanco(int idPedido, string novoStatus)
+        private static void AtualizarStatus(int idOrdertable, string newStatus)
         {
             try
             {
-                using (var context = new FastRestContext())
+                using var context = new FastRestContext();
+
+                var pedido = context.Ordertable.Find(idOrdertable);
+                if (pedido != null)
                 {
-                    var service = new OrdertableService(context);
-                    service.AtualizarStatus(idPedido, novoStatus);
-                    Console.WriteLine($"[Servidor] Pedido #{idPedido} atualizado com sucesso para: {novoStatus}");
+                    pedido.Status = newStatus;
+                    context.SaveChanges();
+
+                    Console.WriteLine($"[Servidor] Pedido #{idOrdertable} atualizado com sucesso para: {newStatus}");
+                }
+                else
+                {
+                    Console.WriteLine($"[Servidor] Pedido #{idOrdertable} não encontrado.");
                 }
             }
             catch (Exception ex)
