@@ -96,5 +96,15 @@ namespace Service
             _context.Product.Remove(__produto);
             _context.SaveChanges();
         }
+
+        public void AtualizarStatus(int idOrdertable, string newStatus)
+        {
+            var pedido = _context.Ordertable.Find(idOrdertable);
+            if (pedido != null)
+            {
+                pedido.Status = newStatus;
+                _context.SaveChanges();
+            }
+        }
     }
 }

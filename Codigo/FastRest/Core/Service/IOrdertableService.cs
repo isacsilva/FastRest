@@ -19,5 +19,7 @@ namespace Core.Service
         IEnumerable<Ordertable> ObterTodos();
 
         void Remover(int idOrdertable);
+
+        void AtualizarStatus(int idOrdertable, string newStatus);
     }
 }
