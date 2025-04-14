@@ -1,5 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using System.Xml.Linq;
+using Core;
 
 namespace FastRest.Models
 {
@@ -24,6 +24,8 @@ namespace FastRest.Models
 
         [Display(Name = "Preço:")]
         [Required(ErrorMessage = "Preço do Order Products é obrigatório")]
-        public int Price { get; set; }
+        public decimal Price { get; set; } // Corrigido para decimal
+        
+        public Product? Product { get; set; }
     }
 }

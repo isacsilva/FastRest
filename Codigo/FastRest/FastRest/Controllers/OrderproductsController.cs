@@ -10,31 +10,25 @@ namespace FastRest.Controllers
 {
     public class OrderproductsController : Controller
     {
-        IOrderproductsService _orderproductsService;
-        IOrdertableService _ordertableService;
-        IMapper _mapper;
+        private readonly IOrderproductsService _orderproductsService;
+        private readonly IMapper _mapper;
 
-        public OrderproductsController(IOrderproductsService orderproductsService,IMapper mapper)
+        public OrderproductsController(IOrderproductsService orderproductsService, IMapper mapper)
         {
             _orderproductsService = orderproductsService;
             _mapper = mapper;
         }
+
         // GET: OrderproductsController
-        public ActionResult Index()
+        public IActionResult Index()
         {
             var listaOrderproducts = _orderproductsService.ObterTodos();
             var listaOrderproductsModel = _mapper.Map<List<OrderproductsModel>>(listaOrderproducts);
             return View(listaOrderproductsModel);
         }
 
-        // GET: OrderproductsController/Details/5
-        public ActionResult Details(int id)
-        {
-            return View();
-        }
-
         // GET: OrderproductsController/Create
-        public ActionResult Create()
+        public IActionResult Create()
         {
             return View();
         }
@@ -42,57 +36,63 @@ namespace FastRest.Controllers
         // POST: OrderproductsController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(OrderproductsModel orderproductsModel)
+        public IActionResult Create(OrderproductsModel orderproductsModel)
         {
             if (ModelState.IsValid)
             {
                 var orderproducts = _mapper.Map<Orderproducts>(orderproductsModel);
                 _orderproductsService.Inserir(orderproducts);
+                return RedirectToAction(nameof(Index));
             }
 
-            return RedirectToAction(nameof(Index));
+            return View(orderproductsModel);
         }
 
         // GET: OrderproductsController/Edit/5
-        public ActionResult Edit(int id)
+        public IActionResult Edit(int id)
         {
-            return View();
+            var orderproduct = _orderproductsService.Obter(id);
+            if (orderproduct == null)
+                return NotFound();
+
+            var model = _mapper.Map<OrderproductsModel>(orderproduct);
+            return View(model);
         }
 
         // POST: OrderproductsController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, OrderproductsModel orderproductsModel)
+        public IActionResult Edit(int id, OrderproductsModel orderproductsModel)
         {
-            try
+            if (ModelState.IsValid)
             {
+                var orderproducts = _mapper.Map<Orderproducts>(orderproductsModel);
+                orderproducts.Id = id;
+                _orderproductsService.Editar(orderproducts);
                 return RedirectToAction(nameof(Index));
             }
-            catch
-            {
-                return View();
-            }
+
+            return View(orderproductsModel);
         }
 
         // GET: OrderproductsController/Delete/5
-        public ActionResult Delete(int id)
+        public IActionResult Delete(int id)
         {
-            return View();
+            var orderproduct = _orderproductsService.Obter(id);
+            if (orderproduct == null)
+                return NotFound();
+
+            var model = _mapper.Map<OrderproductsModel>(orderproduct);
+            return View(model);
         }
 
         // POST: OrderproductsController/Delete/5
-        [HttpPost]
+        [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, OrderproductsModel orderproductsModel)
+        public IActionResult DeleteConfirmed(int id)
         {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            _orderproductsService.Remover(id);
+            return RedirectToAction(nameof(Index));
         }
     }
 }

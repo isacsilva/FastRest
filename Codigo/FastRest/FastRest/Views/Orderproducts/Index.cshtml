@@ -1,59 +1,39 @@
 ﻿@model IEnumerable<FastRest.Models.OrderproductsModel>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Carrinho";
 }
 
-<h1>Index</h1>
+<link rel="stylesheet" href="~/css/cart.css" />
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Id)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ProductId)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.OrderId)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Quantity)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Price)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Id)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ProductId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.OrderId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Quantity)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Price)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+<div class="cart-container">
+    <h2 class="cart-title">Sacola</h2>
+
+    <div class="cart-items">
+        @foreach (var item in Model)
+        {
+            <div class="cart-item">
+                <img src="@(string.IsNullOrEmpty(item.Product?.ImageUrl) ? "/images/default.png" : item.Product.ImageUrl)" alt="@item.Product?.Name" class="cart-item-img" />
+
+                <div class="cart-item-info">
+                    <h4 class="cart-item-name">@item.Product?.Name</h4>
+                    <p class="cart-item-qty">Quantidade: @item.Quantity</p>
+                    <p class="cart-item-price">Preço unitário: R$ @item.Price.ToString("N2")</p>
+                    <p class="cart-item-subtotal">Subtotal: R$ @(item.Price * item.Quantity)</p>
+                    <form asp-controller="Orderproducts" asp-action="Delete" method="post">
+                        <input type="hidden" name="id" value="@item.Id" />
+                        <button type="submit" class="delete-btn">🗑️ Remover</button>
+                    </form>
+                </div>
+            </div>
+        }
+    </div>
+
+    <div class="cart-summary">
+        <div class="summary-row">
+            <span>Total</span>
+            <strong>R$ @Model.Sum(x => x.Price * x.Quantity).ToString("N2")</strong>
+        </div>
+        <button class="checkout-btn">Finalizar Pedido</button>
+    </div>
+</div>
