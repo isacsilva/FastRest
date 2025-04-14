@@ -20,6 +20,8 @@ namespace Core.Service
 
         void Remover(int idOrdertable);
 
+        void AtualizarTotalPedido(int idOrdertable);
+        
         void AtualizarStatus(int idOrdertable, string newStatus);
     }
 }
