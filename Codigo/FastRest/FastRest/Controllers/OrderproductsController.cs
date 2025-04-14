@@ -11,9 +11,10 @@ namespace FastRest.Controllers
     public class OrderproductsController : Controller
     {
         IOrderproductsService _orderproductsService;
+        IOrdertableService _ordertableService;
         IMapper _mapper;
 
-        public OrderproductsController(IOrderproductsService orderproductsService, IMapper mapper)
+        public OrderproductsController(IOrderproductsService orderproductsService,IMapper mapper)
         {
             _orderproductsService = orderproductsService;
             _mapper = mapper;
@@ -61,7 +62,7 @@ namespace FastRest.Controllers
         // POST: OrderproductsController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public ActionResult Edit(int id, OrderproductsModel orderproductsModel)
         {
             try
             {
@@ -82,7 +83,7 @@ namespace FastRest.Controllers
         // POST: OrderproductsController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public ActionResult Delete(int id, OrderproductsModel orderproductsModel)
         {
             try
             {

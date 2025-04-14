@@ -47,6 +47,7 @@ namespace FastRest.Controllers
             {
                 var ordertable = _mapper.Map<Ordertable>(ordertableModel);
                 _ordertableService.Inserir(ordertable);
+                _ordertableService.AtualizarTotalPedido(ordertable.Id);
             }
 
             return RedirectToAction(nameof(Index));
@@ -61,10 +62,22 @@ namespace FastRest.Controllers
         // POST: OrdertableController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public ActionResult Edit(int id, OrdertableModel ordertableModel)
         {
             try
             {
+                if (ModelState.IsValid)
+                {
+                    var ordertable = _mapper.Map<Ordertable>(ordertableModel);
+                    ordertable.Id = id; 
+
+                    
+                    _ordertableService.Editar(ordertable);
+
+                    // Após editar, atualiza o total do pedido
+                    _ordertableService.AtualizarTotalPedido(ordertable.Id);
+                }
+
                 return RedirectToAction(nameof(Index));
             }
             catch
@@ -82,7 +95,7 @@ namespace FastRest.Controllers
         // POST: OrdertableController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public ActionResult Delete(int id, OrdertableModel ordertableModel)
         {
             try
             {
