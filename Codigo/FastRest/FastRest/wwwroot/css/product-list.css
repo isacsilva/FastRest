@@ -1,0 +1,123 @@
+.product-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+    margin-top: 2rem;
+}
+
+.product-card {
+    display: flex;
+    background-color: white;
+    border-radius: 12px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.06);
+    padding: 1rem;
+    align-items: flex-start;
+    gap: 1rem;
+    transition: 0.3s;
+}
+
+.product-card:hover {
+    background-color: #f8f8f8;
+}
+
+.product-image {
+    width: 72px;
+    height: 72px;
+    border-radius: 8px;
+    object-fit: cover;
+}
+
+.product-info {
+    text-align: left;
+    flex: 1;
+}
+
+.product-name {
+    margin: 0;
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+.product-description {
+    margin: 0.2rem 0;
+    font-size: 0.9rem;
+    color: #555;
+    word-break: break-word;
+}
+
+.product-price {
+    font-size: 1rem;
+    font-weight: bold;
+    color: #000;
+    margin-top: 0.5rem;
+}
+
+/* Ações (quantidade e botão) */
+.product-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 1rem;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.quantity-control {
+    display: flex;
+    align-items: center;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.quantity-control button {
+    background: #eee;
+    border: none;
+    padding: 0.5rem 0.8rem;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.quantity-control input {
+    width: 40px;
+    text-align: center;
+    border: none;
+    outline: none;
+    font-weight: bold;
+}
+
+.add-to-cart {
+    background-color: #ffce00;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.add-to-cart:hover {
+    background-color: #f2c100;
+}
+
+.cart-button-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 2rem;
+}
+
+.view-cart-btn {
+    background-color: #222;
+    color: #fff;
+    border: none;
+    padding: 0.8rem 2rem;
+    font-size: 1rem;
+    font-weight: bold;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.view-cart-btn:hover {
+    background-color: #444;
+}

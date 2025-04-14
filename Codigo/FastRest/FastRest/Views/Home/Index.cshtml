@@ -1,20 +1,32 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Tela Inicial";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Bem-vindo ao FastRest</h1>
-
-    <div class="mt-4">
-        <form asp-controller="Home" asp-action="Create" method="post">
-            @Html.AntiForgeryToken()
-            <input type="hidden" name="ConsumptionMethod" value="DINE_IN" />
-            <button type="submit" class="btn btn-success btn-lg m-2">Para comer aqui</button>
-        </form>
-
-        <form asp-controller="Home" asp-action="Create" method="post">
-            @Html.AntiForgeryToken()
-            <input type="hidden" name="ConsumptionMethod" value="TAKEWAY" />
-            <button type="submit" class="btn btn-warning btn-lg m-2">Para levar</button>
-        </form>
+<div class="container">
+    <div class="text">
+        <h3>Seja bem-vindo!</h3>
+        <p>
+            Escolha como prefere aproveitar suaAAA refeição. <br />
+        </p>
     </div>
+
+    <div class="options">
+        <div class="option-card">
+            <img src="/images/dine_in.png" alt="Para comer aqui" />
+            <form asp-controller="Home" asp-action="Create" method="post">
+                @Html.AntiForgeryToken()
+                <input type="hidden" name="ConsumptionMethod" value="DINE_IN" />
+                <button type="submit">Comer aqui</button>
+            </form>
+        </div>
+
+        <div class="option-card">
+            <img src="/images/takeway.png" alt="Para levar" />
+            <form asp-controller="Home" asp-action="Create" method="post">
+                @Html.AntiForgeryToken()
+                <input type="hidden" name="ConsumptionMethod" value="TAKEWAY" />
+                <button type="submit">Para levar</button>
+            </form>
+        </div>
+    </div>
+</div>

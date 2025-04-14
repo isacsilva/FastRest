@@ -14,6 +14,9 @@ namespace FastRest.Models
         [Required(ErrorMessage = "Nome do Produto requerido")]
         [StringLength(60, MinimumLength = 5, ErrorMessage = "Nome da Produto deve ter entre 5 e 60 caracteres")]
         public required string Name { get; set; }
+        
+        [Display(Name = "Imagem do Produto:")]
+        public string? ImageUrl { get; set; }
 
         [Display(Name = "Descrição:")]
         [Required(ErrorMessage = "Descrição do Produto requerido")]
