@@ -57,19 +57,25 @@ namespace FastRest.Controllers
         }
 
         // GET: OrdertableController/Edit/5
-        public ActionResult Edit(int id, string status)
+        public IActionResult Edit(int id, string status)
+    {
+        if (string.IsNullOrEmpty(status))
         {
-            var dto = new OrderStatusUpdateDTO
-            {
-                IdPedido = id,
-                Status = status
-            };
-
-            string resposta = PeerClient.EnviarStatusPedido(dto);
-            TempData["CreateStatus"] = resposta;
-
+            TempData["CreateStatus"] = "Status inválido.";
             return RedirectToAction("Index");
         }
+
+        var dto = new OrderStatusUpdateDTO
+        {
+            IdPedido = id,
+            Status = status
+        };
+
+        string resposta = PeerClient.EnviarStatusPedido(dto);
+
+        TempData["CreateStatus"] = resposta;
+        return RedirectToAction("Index");
+    }
 
         // POST: OrdertableController/Edit/5
         [HttpPost]

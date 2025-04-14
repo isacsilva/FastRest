@@ -10,6 +10,5 @@ namespace Core.DTO
     {
         public int IdPedido { get; set; }
         public required string Status { get; set; }
-
     }
 }

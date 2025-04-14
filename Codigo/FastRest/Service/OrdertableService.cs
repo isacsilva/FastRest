@@ -116,18 +116,23 @@ namespace Service
             }
         }
 
+
+
+
         public void AtualizarStatus(int idOrdertable, string newStatus)
         {
-            var pedido = _context.Ordertable.Find(idOrdertable); // busca pelo ID
+            var pedido = _context.Ordertable.Find(idOrdertable);
             if (pedido != null)
             {
-                pedido.Status = newStatus; // atualiza o status
-                _context.Update(pedido);   // marca como modificado
-                _context.SaveChanges();    // salva as alterações no banco
+                pedido.Status = newStatus;
+                _context.Ordertable.Update(pedido);
+                _context.SaveChanges();
+
+                Console.WriteLine($"[OrdertableService] Pedido #{idOrdertable} atualizado com sucesso para: {newStatus}");
             }
             else
             {
-                Console.WriteLine($"[OrdertableService] Pedido com ID {idOrdertable} não encontrado.");
+                Console.WriteLine($"[OrdertableService] Pedido #{idOrdertable} não encontrado.");
             }
         }
     }

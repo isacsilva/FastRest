@@ -6,18 +6,21 @@ using System.Text.Json;
 using System.Threading;
 using Core.DTO;
 using Core.Service;
-
+using Microsoft.Extensions.DependencyInjection;
 namespace Core.Server
 {
     public class PeerServer
     {
-        private readonly IOrdertableService _orderService; 
+        private readonly IServiceProvider _serviceProvider;
         private TcpListener _servidor;
         private static bool _emExecucao = false;
+        //private readonly IOrdertableService _orderService; 
+        //private TcpListener _servidor;
+        //private static bool _emExecucao = false;
 
-        public PeerServer(IOrdertableService orderService)
+        public PeerServer(IServiceProvider serviceProvider)
         {
-            _orderService = orderService;
+            _serviceProvider = serviceProvider;
         }
 
         public void Start(int porta = 5050)
@@ -67,7 +70,11 @@ namespace Core.Server
 
                 if (orderUpdate != null)
                 {
-                    AtualizarStatus(orderUpdate.IdPedido, orderUpdate.Status);
+                    using var scope = _serviceProvider.CreateScope();
+                    var orderService = scope.ServiceProvider.GetRequiredService<IOrdertableService>();
+
+                    orderService.AtualizarStatus(orderUpdate.IdPedido, orderUpdate.Status);
+                    Console.WriteLine($"[Servidor] Pedido #{orderUpdate.IdPedido} atualizado para: {orderUpdate.Status}");
 
                     string resposta = $"Status do pedido #{orderUpdate.IdPedido} atualizado para '{orderUpdate.Status}'";
                     byte[] respostaBytes = Encoding.UTF8.GetBytes(resposta);
@@ -80,19 +87,6 @@ namespace Core.Server
             }
 
             cliente.Close();
-        }
-
-        private void AtualizarStatus(int id, string newStatus)
-        {
-            try
-            {
-                _orderService.AtualizarStatus(id, newStatus);
-                Console.WriteLine($"[Servidor] Pedido #{id} atualizado com sucesso para: {newStatus}");
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"[Servidor] Erro ao atualizar: {ex.Message}");
-            }
         }
     }
 }

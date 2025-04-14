@@ -13,6 +13,5 @@ namespace Core.DTO
         public required string Status { get; set; }
         public required string ConsumptionMethod { get; set; }
         public int RestaurantId { get; set; }
-
     }
 }

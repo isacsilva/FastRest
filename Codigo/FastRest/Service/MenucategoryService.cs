@@ -18,14 +18,14 @@ namespace Service
         }
 
         /// <summary>
-		/// Consulta genérica aos dados do Menucategory
-		/// </summary>
-		/// <returns></returns>
-		private IQueryable<Menucategory> GetQuery()
+        /// Consulta genérica aos dados do Menucategory
+        /// </summary>
+        /// <returns></returns>
+        private IQueryable<Menucategory> GetQuery()
         {
             IQueryable<Menucategory> tb_menucategory = _context.Menucategory;
             var query = from menucategory in tb_menucategory
-                        select menucategory;
+                select menucategory;
             return query;
         }
 
@@ -39,10 +39,10 @@ namespace Service
         }
 
         /// <summary>
-		/// Obtém pelo identificado do menucategory
-		/// </summary>
-		/// <param name="id"></param>
-		/// <returns></returns>
+        /// Obtém pelo identificado do menucategory
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public Menucategory Obter(int idMenucategory)
         {
             IEnumerable<Menucategory> menucategory = GetQuery().Where(MenucategoryModel => MenucategoryModel.Id.Equals(idMenucategory));

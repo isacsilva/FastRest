@@ -1,7 +1,8 @@
 using Core;
 using Core.Service;
-using Core.Server; 
+using Core.Server;
 using Microsoft.EntityFrameworkCore;
+using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
 using Service;
 
 namespace FastRest
@@ -12,37 +13,40 @@ namespace FastRest
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            var connectionString = builder.Configuration.GetConnectionString("FastRestConnection") 
+            var connectionString = builder.Configuration.GetConnectionString("FastRestConnection")
                 ?? throw new InvalidOperationException("Connection string 'FastRestConnection' not found.");
 
-            // Add services to the container.
-            builder.Services.AddControllersWithViews();
-            builder.Services.AddDbContext<FastRestContext>(
-                options => options.UseMySQL(connectionString));
+            // Configura o contexto do banco com Pomelo + AutoDetect
+            builder.Services.AddDbContext<FastRestContext>(options =>
+                options.UseMySql(
+                    connectionString,
+                    ServerVersion.AutoDetect(connectionString) // Auto detecta a versão do MySQL
+                )
+            );
 
-            // Injeção de dependência dos Services
+            // Add Controllers + Views
+            builder.Services.AddControllersWithViews();
+
+            // Injeção de dependência dos serviços
             builder.Services.AddTransient<IProductService, ProductService>();
             builder.Services.AddTransient<IRestaurantService, RestaurantService>();
             builder.Services.AddTransient<IOrdertableService, OrdertableService>();
             builder.Services.AddTransient<IOrderproductsService, OrderproductsService>();
             builder.Services.AddTransient<IMenucategoryService, MenucategoryService>();
 
-            builder.Services.AddScoped<PeerServer>();
+            // Singleton do PeerServer para sockets
+            builder.Services.AddSingleton<PeerServer>();
 
-            // Injeção de dependência dos mappers
+            // AutoMapper
             builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
             var app = builder.Build();
 
-            // Iniciar o PeerServer em segundo plano 
-            using (var scope = app.Services.CreateScope()) 
-            { 
-                var peerServer = scope.ServiceProvider.GetRequiredService<PeerServer>(); 
-                peerServer.Start(5050); 
+            // Inicia o servidor socket paralelo
+            var peerServer = app.Services.GetRequiredService<PeerServer>();
+            peerServer.Start(5050);
 
-            }// ← Aqui é onde o servidor socket começa a escutar
-
-            // Configure o pipeline HTTP
+            // Pipeline padrão do ASP.NET Core
             if (!app.Environment.IsDevelopment())
             {
                 app.UseExceptionHandler("/Home/Error");
@@ -53,7 +57,6 @@ namespace FastRest
             app.UseStaticFiles();
 
             app.UseRouting();
-
             app.UseAuthorization();
 
             app.MapControllerRoute(

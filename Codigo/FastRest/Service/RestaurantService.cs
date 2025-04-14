@@ -18,14 +18,14 @@ namespace Service
         }
 
         /// <summary>
-		/// Consulta genérica aos dados do restaurante
-		/// </summary>
-		/// <returns></returns>
-		private IQueryable<Restaurant> GetQuery()
+        /// Consulta genérica aos dados do restaurante
+        /// </summary>
+        /// <returns></returns>
+        private IQueryable<Restaurant> GetQuery()
         {
             IQueryable<Restaurant> tb_restaurante = _context.Restaurant;
             var query = from restaurante in tb_restaurante
-                        select restaurante;
+                select restaurante;
             return query;
         }
 
@@ -39,10 +39,10 @@ namespace Service
         }
 
         /// <summary>
-		/// Obtém pelo identificado do restaurante
-		/// </summary>
-		/// <param name="id"></param>
-		/// <returns></returns>
+        /// Obtém pelo identificado do restaurante
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public Restaurant Obter(int idRestaurante)
         {
             IEnumerable<Restaurant> produtos = GetQuery().Where(RestauranteModel => RestauranteModel.Id.Equals(idRestaurante));
