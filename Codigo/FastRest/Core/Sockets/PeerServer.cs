@@ -11,12 +11,18 @@ namespace Core.Server
 {
     public class PeerServer
     {
-        private static TcpListener _servidor;
+        private readonly IOrdertableService _orderService; 
+        private TcpListener _servidor;
         private static bool _emExecucao = false;
 
-        public static void Start(int porta = 5050)
+        public PeerServer(IOrdertableService orderService)
         {
-            if (_emExecucao) return; // evita iniciar duas vezes
+            _orderService = orderService;
+        }
+
+        public void Start(int porta = 5050)
+        {
+            if (_emExecucao) return;
 
             _servidor = new TcpListener(IPAddress.Any, porta);
             _servidor.Start();
@@ -30,9 +36,7 @@ namespace Core.Server
                 {
                     try
                     {
-                        TcpClient cliente = _servidor.AcceptTcpClient();
-                        Console.WriteLine("[Servidor] Novo cliente conectado.");
-
+                        var cliente = _servidor.AcceptTcpClient();
                         Thread t = new Thread(() => TratarCliente(cliente));
                         t.Start();
                     }
@@ -47,9 +51,9 @@ namespace Core.Server
             threadServidor.Start();
         }
 
-        private static void TratarCliente(TcpClient cliente)
+        private void TratarCliente(TcpClient cliente)
         {
-            using NetworkStream stream = cliente.GetStream();
+            using var stream = cliente.GetStream();
             byte[] buffer = new byte[1024];
 
             try
@@ -73,36 +77,21 @@ namespace Core.Server
             catch (Exception e)
             {
                 Console.WriteLine("[Servidor] Erro: " + e.Message);
-                string erro = "Erro ao processar solicitação.";
-                byte[] erroBytes = Encoding.UTF8.GetBytes(erro);
-                stream.Write(erroBytes, 0, erroBytes.Length);
             }
 
             cliente.Close();
         }
 
-        private static void AtualizarStatus(int idOrdertable, string newStatus)
+        private void AtualizarStatus(int id, string newStatus)
         {
             try
             {
-                using var context = new FastRestContext();
-
-                var pedido = context.Ordertable.Find(idOrdertable);
-                if (pedido != null)
-                {
-                    pedido.Status = newStatus;
-                    context.SaveChanges();
-
-                    Console.WriteLine($"[Servidor] Pedido #{idOrdertable} atualizado com sucesso para: {newStatus}");
-                }
-                else
-                {
-                    Console.WriteLine($"[Servidor] Pedido #{idOrdertable} não encontrado.");
-                }
+                _orderService.AtualizarStatus(id, newStatus);
+                Console.WriteLine($"[Servidor] Pedido #{id} atualizado com sucesso para: {newStatus}");
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"[Servidor] Erro ao atualizar o pedido no banco: {ex.Message}");
+                Console.WriteLine($"[Servidor] Erro ao atualizar: {ex.Message}");
             }
         }
     }

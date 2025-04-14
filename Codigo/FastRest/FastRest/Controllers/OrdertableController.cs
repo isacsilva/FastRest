@@ -1,7 +1,10 @@
 ﻿using AutoMapper;
 using Core;
+using Core.DTO;
+using Core.Server;
 using Core.Service;
 using FastRest.Models;
+using Humanizer;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -54,9 +57,18 @@ namespace FastRest.Controllers
         }
 
         // GET: OrdertableController/Edit/5
-        public ActionResult Edit(int id)
+        public ActionResult Edit(int id, string status)
         {
-            return View();
+            var dto = new OrderStatusUpdateDTO
+            {
+                IdPedido = id,
+                Status = status
+            };
+
+            string resposta = PeerClient.EnviarStatusPedido(dto);
+            TempData["CreateStatus"] = resposta;
+
+            return RedirectToAction("Index");
         }
 
         // POST: OrdertableController/Edit/5

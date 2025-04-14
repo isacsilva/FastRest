@@ -118,11 +118,16 @@ namespace Service
 
         public void AtualizarStatus(int idOrdertable, string newStatus)
         {
-            var pedido = _context.Ordertable.Find(idOrdertable);
+            var pedido = _context.Ordertable.Find(idOrdertable); // busca pelo ID
             if (pedido != null)
             {
-                pedido.Status = newStatus;
-                _context.SaveChanges();
+                pedido.Status = newStatus; // atualiza o status
+                _context.Update(pedido);   // marca como modificado
+                _context.SaveChanges();    // salva as alterações no banco
+            }
+            else
+            {
+                Console.WriteLine($"[OrdertableService] Pedido com ID {idOrdertable} não encontrado.");
             }
         }
     }
