@@ -96,6 +96,25 @@ namespace Service
             _context.Product.Remove(__produto);
             _context.SaveChanges();
         }
+        public void AtualizarTotalPedido(int idOrdertable)
+        {
+            var orderProducts = _context.Orderproducts
+                                        .Where(op => op.OrderId == idOrdertable)
+                                        .ToList();
+
+            decimal total = 0;
+            foreach (var orderProduct in orderProducts)
+            {
+                total += orderProduct.Quantity * orderProduct.Price;
+            }
+
+            var orderTable = _context.Ordertable.Find(idOrdertable);
+            if (orderTable != null)
+            {
+                orderTable.Total = total;
+                _context.SaveChanges();
+            }
+        }
 
         public void AtualizarStatus(int idOrdertable, string newStatus)
         {
