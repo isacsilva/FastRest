@@ -1,0 +1,11 @@
+*.xml
+Codigo/FastRest/Core/obj/Core.csproj.nuget.dgspec.json
+Codigo/FastRest/Core/obj/Core.csproj.nuget.g.props
+Codigo/FastRest/Core/obj/Core.csproj.nuget.g.props
+*.props
+Codigo/FastRest/Core/obj/Core.csproj.nuget.dgspec.json
+*.json
+Codigo/FastRest/Core/obj/project.nuget.cache
+*.cache
+Codigo/FastRest/Service/obj/project.assets.json
+*.json
