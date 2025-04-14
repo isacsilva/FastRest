@@ -9,7 +9,7 @@ namespace Core.Server
 {
     public class PeerClient
     {
-        public static string EnviarStatusPedido(OrderStatusUpdateDTO pedido, string ipServidor = "127.0.0.1", int porta = 5050)
+        public static string EnviarStatusPedido(OrderStatusUpdateDTO ordertable, string ipServidor = "127.0.0.1", int porta = 5050)
         {
             try
             {
@@ -17,7 +17,7 @@ namespace Core.Server
                 using NetworkStream stream = cliente.GetStream();
 
                 // Serializa o objeto em JSON
-                string json = JsonSerializer.Serialize(pedido);
+                string json = JsonSerializer.Serialize(ordertable);
                 byte[] dados = Encoding.UTF8.GetBytes(json);
 
                 // Envia o JSON para o servidor

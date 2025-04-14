@@ -27,13 +27,20 @@ namespace FastRest
             builder.Services.AddTransient<IOrderproductsService, OrderproductsService>();
             builder.Services.AddTransient<IMenucategoryService, MenucategoryService>();
 
+            builder.Services.AddScoped<PeerServer>();
+
             // Injeção de dependência dos mappers
             builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
             var app = builder.Build();
 
-            // Iniciar o PeerServer em segundo plano
-            PeerServer.Start(); // ← Aqui é onde o servidor socket começa a escutar
+            // Iniciar o PeerServer em segundo plano 
+            using (var scope = app.Services.CreateScope()) 
+            { 
+                var peerServer = scope.ServiceProvider.GetRequiredService<PeerServer>(); 
+                peerServer.Start(5050); 
+
+            }// ← Aqui é onde o servidor socket começa a escutar
 
             // Configure o pipeline HTTP
             if (!app.Environment.IsDevelopment())

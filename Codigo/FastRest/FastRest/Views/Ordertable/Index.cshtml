@@ -4,7 +4,12 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<h1>Pedidos</h1>
+
+@if (TempData["CreateStatus"] != null)
+{
+    <div class="alert alert-info"> @TempData["CreateStatus"] </div>
+}
 
 <p>
     <a asp-action="Create">Create New</a>
@@ -48,10 +53,9 @@
             <td>
                 @Html.DisplayFor(modelItem => item.RestaurantId)
             </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+            <td> 
+                    <a asp-action="Edit" asp-route-id="@item.Id" asp-route-status="IN_PREPARATION" class="btn btn-warning btn-sm">Em preparo</a>
+                    <a asp-action="Edit" asp-route-id="@item.Id" asp-route-status="FINISHED" class="btn btn-success btn-sm">Finalizar</a>
             </td>
         </tr>
 }
