@@ -7,6 +7,8 @@
 <link rel="stylesheet" href="~/css/product-list.css" />
 
 <div class="product-list">
+    
+    <input type="hidden" id="idPedido" value="@ViewBag.IdPedido" />
 
     <div class="text">
         <h3>Escolha seu produto</h3>
@@ -21,7 +23,7 @@
             <div class="product-info">
                 <h3 class="product-name">@item.Name</h3>
                 <p class="product-description">@item.Description</p>
-                <p class="product-price">R$ @item.Price.ToString("N2")</p>
+                <p class="product-price">@item.Price.ToString("F2", System.Globalization.CultureInfo.InvariantCulture)</p>
 
                 <div class="product-actions">
                     <div class="quantity-control">
@@ -29,28 +31,48 @@
                         <input type="number" value="1" min="1"/>
                         <button type="button" onclick="increment(this)">+</button>
                     </div>
-                    <button class="add-to-cart">Adicionar à sacola</button>
+                    <button class="add-to-cart" onclick="adicionarProduto(@item.Id, this)">Adicionar à sacola</button>
                 </div>
             </div>
         </div>
     }
 
     <div class="cart-button-container">
-        <button class="view-cart-btn">🛒 Ver carrinho</button>
+        <button class="view-cart-btn" onclick="verCarrinho()">🛒 Ver carrinho</button>
     </div>
     
 </div>
 
-<script>
-    function increment(btn) {
-        const input = btn.parentNode.querySelector('input');
-        input.value = parseInt(input.value) + 1;
-    }
+<<script>
+     function increment(btn) {
+         const input = btn.parentNode.querySelector('input');
+         input.value = parseInt(input.value) + 1;
+     }
 
-    function decrement(btn) {
-        const input = btn.parentNode.querySelector('input');
-        if (parseInt(input.value) > 1) {
-            input.value = parseInt(input.value) - 1;
-        }
-    }
+     function decrement(btn) {
+         const input = btn.parentNode.querySelector('input');
+         if (parseInt(input.value) > 1) {
+             input.value = parseInt(input.value) - 1;
+         }
+     }
+
+     function adicionarProduto(idProduto, btn) {
+         const card = btn.closest('.product-card');
+         const quantidade = parseInt(card.querySelector('input').value);
+         const preco = parseFloat(card.querySelector('.product-price').textContent.replace('R$', '').replace(',', '.'));
+         const idPedido = document.getElementById('idPedido').value;
+
+         fetch('/Product/AddToOrder', {
+             method: 'POST',
+             headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+             body: `idPedido=${idPedido}&idProduto=${idProduto}&quantidade=${quantidade}&preco=${preco}`
+         })
+             .then(res => res.text())
+             .then(msg => alert(msg))
+             .catch(err => alert("Erro ao adicionar: " + err));
+     }
+     function verCarrinho() {
+         const idPedido = document.getElementById('idPedido').value;
+         window.location.href = `/Orderproducts?idPedido=${idPedido}`;
+     }
 </script>

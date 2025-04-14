@@ -4,22 +4,27 @@ using Core.Service;
 using FastRest.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Service;
 
 namespace FastRest.Controllers
 {
     public class ProductController : Controller
     {
+        IOrderproductsService _orderproductsService;
         IProductService _produtoService;
         IMapper _mapper;
 
-        public ProductController(IProductService produtoService, IMapper mapper)
+        public ProductController(IProductService produtoService, IOrderproductsService orderproductsService, IMapper mapper)
         {
+            _orderproductsService = orderproductsService;
             _produtoService = produtoService;
             _mapper = mapper;
         }
         // GET: ProductController
-        public ActionResult Index()
+        public ActionResult Index(int idPedido)
         {
+            ViewBag.IdPedido = idPedido;
+
             var listaProdutos = _produtoService.ObterTodos();
             var listaProdutosModel = _mapper.Map<List<ProductModel>>(listaProdutos);
             return View(listaProdutosModel);
@@ -99,6 +104,25 @@ namespace FastRest.Controllers
         public ActionResult Painel()
         {
             return View();
+        }
+
+        [HttpPost]
+        public IActionResult AddToOrder(int idPedido, int idProduto, int quantidade, decimal preco)
+        {
+            if (idPedido <= 0 || idProduto <= 0 || quantidade <= 0 || preco <= 0)
+                return BadRequest("Dados inválidos");
+
+            var novoItem = new Orderproducts
+            {
+                OrderId = idPedido,
+                ProductId = idProduto,
+                Quantity = quantidade,
+                Price = preco
+            };
+
+            _orderproductsService.Inserir(novoItem);
+
+            return Ok("Produto adicionado ao pedido!");
         }
 
     }

@@ -60,9 +60,10 @@ namespace FastRest.Controllers
             if (ModelState.IsValid)
             {
                 var ordertable = _mapper.Map<Ordertable>(ordertableModel);
-                _ordertableService.Inserir(ordertable);
+                int id = _ordertableService.Inserir(ordertable);
 
-                return RedirectToAction("Index", "Product");
+                // Redireciona para a página de produtos com o idPedido pela URL
+                return RedirectToAction("Index", "Product", new { idPedido = id });
             }
 
             return RedirectToAction("Index", "Home");
