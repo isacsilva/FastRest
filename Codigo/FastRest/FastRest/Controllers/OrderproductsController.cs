@@ -110,7 +110,7 @@ namespace FastRest.Controllers
             _orderproductsService.AtualizarTotalPedido(idPedido, total);
 
             TempData["CreateStatus"] = "Pedido finalizado com sucesso!";
-            return RedirectToAction("Index", "Ordertable");
+            return RedirectToAction("Index", "Ordertable", new { idPedido });
         }
     }
 }

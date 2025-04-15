@@ -22,11 +22,11 @@ namespace FastRest.Controllers
         }
 
         // GET: OrdertableController
-        public ActionResult Index()
+        public IActionResult Index(int idPedido)
         {
-            var listaOrdertable = _ordertableService.ObterTodos();
-            var listaOrdertableModel = _mapper.Map<List<OrdertableModel>>(listaOrdertable);
-            return View(listaOrdertableModel);
+            var pedido = _ordertableService.ObterTodos().Where(o => o.Id == idPedido).ToList();
+            var model = _mapper.Map<List<OrdertableModel>>(pedido);
+            return View(model);
         }
 
         // GET: OrdertableController/Details/5
