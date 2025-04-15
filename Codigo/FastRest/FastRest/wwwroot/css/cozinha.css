@@ -1,0 +1,90 @@
+.orders-container {
+    max-width: 700px;
+    margin: 2rem auto;
+    padding: 1rem;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.orders-title {
+    font-size: 1.8rem;
+    font-weight: bold;
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.order-card {
+    border: 1px solid #e0e0e0;
+    border-radius: 12px;
+    padding: 1rem;
+    margin-bottom: 1.5rem;
+    background-color: #fff;
+    transition: box-shadow 0.2s ease;
+}
+
+.order-card:hover {
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.05);
+}
+
+.order-status {
+    display: inline-block;
+    padding: 0.4rem 1rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    border-radius: 20px;
+    margin-bottom: 0.8rem;
+    text-transform: capitalize;
+}
+
+.order-status.pending {
+    background-color: #fff3cd;
+    color: #856404;
+}
+
+.order-status.in_preparation {
+    background-color: #d1ecf1;
+    color: #0c5460;
+}
+
+.order-status.finished {
+    background-color: #d4edda;
+    color: #155724;
+}
+
+.order-info {
+    margin-bottom: 1rem;
+    font-size: 0.95rem;
+}
+
+.order-info p {
+    margin: 0.3rem 0;
+}
+
+form {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    flex-wrap: wrap;
+}
+
+.status-select {
+    padding: 0.4rem 0.8rem;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 0.9rem;
+}
+
+.btn-update-status {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 0.4rem 1rem;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.btn-update-status:hover {
+    background-color: #45a049;
+}

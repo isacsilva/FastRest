@@ -1,0 +1,113 @@
+@model IEnumerable<FastRest.Models.OrdertableModel>
+
+@{
+    ViewData["Title"] = "Controle da Cozinha";
+    var textInfo = System.Globalization.CultureInfo.CurrentCulture.TextInfo;
+}
+
+<link rel="stylesheet" href="~/css/cozinha.css" />
+
+<div class="orders-container">
+    <h2 class="orders-title">👨‍🍳 Pedidos Recebidos</h2>
+
+    <div id="pedidos-list">
+        @foreach (var pedido in Model)
+        {
+            <div class="order-card" data-id="@pedido.Id">
+                <span class="order-status @pedido.Status.ToLower()">
+                    @textInfo.ToTitleCase(pedido.Status.Replace("_", " ").ToLower())
+                </span>
+
+                <div class="order-info">
+                    <p><strong>Pedido #@pedido.Id</strong></p>
+                    <p>Total: <strong>R$ @pedido.Total.ToString("N2")</strong></p>
+                    <p>Criado em: @pedido.CreatedAt?.ToString("dd/MM/yyyy HH:mm")</p>
+                </div>
+
+                <form class="status-form" data-id="@pedido.Id">
+                    <input type="hidden" name="id" value="@pedido.Id" />
+
+                    <label for="status">Atualizar status:</label>
+                    <select name="status" class="status-select">
+                        @if (pedido.Status == "PENDING")
+                        {
+                            <option selected>PENDING</option>
+                        }
+                        else
+                        {
+                            <option>PENDING</option>
+                        }
+
+                        @if (pedido.Status == "IN_PREPARATION")
+                        {
+                            <option selected>IN_PREPARATION</option>
+                        }
+                        else
+                        {
+                            <option>IN_PREPARATION</option>
+                        }
+
+                        @if (pedido.Status == "FINISHED")
+                        {
+                            <option selected>FINISHED</option>
+                        }
+                        else
+                        {
+                            <option>FINISHED</option>
+                        }
+                    </select>
+
+                    <button type="submit" class="btn-update-status">Atualizar</button>
+                </form>
+            </div>
+        }
+    </div>
+</div>
+
+@section Scripts {
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $(".status-form").on("submit", function (e) {
+                e.preventDefault();
+
+                const form = $(this);
+                const id = form.find("input[name='id']").val();
+                const status = form.find("select[name='status']").val();
+
+                $.ajax({
+                    url: "/Ordertable/Edit",
+                    type: "GET",
+                    data: { id, status },
+                    success: function () {
+                        const card = $(`[data-id='${id}']`);
+                        const span = card.find(".order-status");
+
+                        const texto = status.replace("_", " ").toLowerCase();
+                        span.text(texto.charAt(0).toUpperCase() + texto.slice(1));
+                        span.attr("class", "order-status " + status.toLowerCase());
+                    },
+                    error: function () {
+                        alert("Erro ao atualizar status.");
+                    }
+                });
+            });
+
+            const socket = new WebSocket("ws://localhost:5050");
+
+            socket.onmessage = function (event) {
+                const update = JSON.parse(event.data);
+                const card = document.querySelector(`[data-id='${update.id}']`);
+                if (card) {
+                    const span = card.querySelector('.order-status');
+                    const texto = update.status.replace("_", " ").toLowerCase();
+                    span.textContent = texto.charAt(0).toUpperCase() + texto.slice(1);
+                    span.className = "order-status " + update.status.toLowerCase();
+                } else {
+                    location.reload(); // novo pedido
+                }
+            };
+        });
+    </script>
+}

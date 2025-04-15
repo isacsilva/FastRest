@@ -124,5 +124,14 @@ namespace FastRest.Controllers
                 return View();
             }
         }
+        
+        // dentro de OrdertableController.cs
+
+        public IActionResult Cozinha()
+        {
+            var pedidos = _ordertableService.ObterTodos(); // ou com filtro se quiser só pendentes
+            var model = _mapper.Map<List<OrdertableModel>>(pedidos);
+            return View(model);
+        }
     }
 }
