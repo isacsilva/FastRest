@@ -20,9 +20,14 @@ namespace FastRest.Controllers
         }
 
         // GET: OrderproductsController
-        public IActionResult Index()
+        public IActionResult Index(int idPedido)
         {
-            var listaOrderproducts = _orderproductsService.ObterTodos();
+            ViewBag.IdPedido = idPedido;
+
+            var listaOrderproducts = _orderproductsService.ObterTodos()
+                .Where(op => op.OrderId == idPedido)
+                .ToList();
+
             var listaOrderproductsModel = _mapper.Map<List<OrderproductsModel>>(listaOrderproducts);
             return View(listaOrderproductsModel);
         }
@@ -93,6 +98,19 @@ namespace FastRest.Controllers
         {
             _orderproductsService.Remover(id);
             return RedirectToAction(nameof(Index));
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult FinalizarPedido(int idPedido, decimal total)
+        {
+            if (idPedido <= 0 || total < 0)
+                return BadRequest("Dados inválidos");
+
+            _orderproductsService.AtualizarTotalPedido(idPedido, total);
+
+            TempData["CreateStatus"] = "Pedido finalizado com sucesso!";
+            return RedirectToAction("Index", "Ordertable");
         }
     }
 }

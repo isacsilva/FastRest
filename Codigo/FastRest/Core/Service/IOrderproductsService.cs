@@ -19,5 +19,7 @@ namespace Core.Service
 
         void Remover(int idOrderproducts);
 
+        void AtualizarTotalPedido(int idPedido, decimal total);
+
     }
 }

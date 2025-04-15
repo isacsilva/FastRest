@@ -57,5 +57,15 @@ namespace Service
                 _context.SaveChanges();
             }
         }
+
+        public void AtualizarTotalPedido(int idPedido, decimal total)
+        {
+            var order = _context.Ordertable.Find(idPedido);
+            if (order != null)
+            {
+                order.Total = total;
+                _context.SaveChanges();
+            }
+        }
     }
 }

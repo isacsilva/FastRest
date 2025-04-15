@@ -34,6 +34,10 @@
             <span>Total</span>
             <strong>R$ @Model.Sum(x => x.Price * x.Quantity).ToString("N2")</strong>
         </div>
-        <button class="checkout-btn">Finalizar Pedido</button>
+        <form asp-controller="Orderproducts" asp-action="FinalizarPedido" method="post">
+            <input type="hidden" name="idPedido" value="@ViewBag.IdPedido" />
+            <input type="hidden" name="total" value="@Model.Sum(x => x.Price * x.Quantity)" />
+            <button type="submit" class="checkout-btn">Finalizar Pedido</button>
+        </form>
     </div>
 </div>

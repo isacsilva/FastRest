@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "wVR+vTv3JkQddNcVMSyAWnED0I8Qjt2h3JcrBYlJaOo=",
+  "Hash": "GGyOJfnO5rryX4yrDFkYdAFUrxhuML64NZDb3zVhyjs=",
   "Source": "FastRest",
   "BasePath": "_content/FastRest",
   "Mode": "Default",
@@ -1086,6 +1086,40 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\css\\cart.css"
+    },
+    {
+      "Identity": "C:\\Users\\Isac\\Desktop\\FastRest\\Codigo\\FastRest\\FastRest\\wwwroot\\css\\cozinha.css",
+      "SourceId": "FastRest",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\Isac\\Desktop\\FastRest\\Codigo\\FastRest\\FastRest\\wwwroot\\",
+      "BasePath": "_content/FastRest",
+      "RelativePath": "css/cozinha.css",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\css\\cozinha.css"
+    },
+    {
+      "Identity": "C:\\Users\\Isac\\Desktop\\FastRest\\Codigo\\FastRest\\FastRest\\wwwroot\\css\\orders.css",
+      "SourceId": "FastRest",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\Isac\\Desktop\\FastRest\\Codigo\\FastRest\\FastRest\\wwwroot\\",
+      "BasePath": "_content/FastRest",
+      "RelativePath": "css/orders.css",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\css\\orders.css"
     },
     {
       "Identity": "C:\\Users\\Isac\\Desktop\\FastRest\\Codigo\\FastRest\\FastRest\\wwwroot\\css\\product-list.css",

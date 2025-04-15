@@ -27,7 +27,7 @@ namespace FastRest.Models
         [Required(ErrorMessage = "Numero restaurante da Produto é obrigatório")]
         public int RestaurantId { get; set; }
         
-        public List<OrderproductsModel> OrderProducts { get; set; }
+        public List<OrderproductsModel>? OrderProducts { get; set; }
         
         public DateTime? CreatedAt { get; set; }
     }

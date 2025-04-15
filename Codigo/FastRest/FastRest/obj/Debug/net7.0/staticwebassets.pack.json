@@ -9,6 +9,14 @@
       "PackagePath": "staticwebassets\\css\\cart.css"
     },
     {
+      "Id": "C:\\Users\\Isac\\Desktop\\FastRest\\Codigo\\FastRest\\FastRest\\wwwroot\\css\\cozinha.css",
+      "PackagePath": "staticwebassets\\css\\cozinha.css"
+    },
+    {
+      "Id": "C:\\Users\\Isac\\Desktop\\FastRest\\Codigo\\FastRest\\FastRest\\wwwroot\\css\\orders.css",
+      "PackagePath": "staticwebassets\\css\\orders.css"
+    },
+    {
       "Id": "C:\\Users\\Isac\\Desktop\\FastRest\\Codigo\\FastRest\\FastRest\\wwwroot\\css\\product-list.css",
       "PackagePath": "staticwebassets\\css\\product-list.css"
     },
