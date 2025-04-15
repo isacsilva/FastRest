@@ -500,3 +500,5 @@ C:\Users\Isac\Desktop\FastRest\Codigo\FastRest\FastRest\bin\Debug\net7.0\runtime
 C:\Users\Isac\Desktop\FastRest\Codigo\FastRest\FastRest\bin\Debug\net7.0\runtimes\win\lib\net6.0\System.Drawing.Common.dll
 C:\Users\Isac\Desktop\FastRest\Codigo\FastRest\FastRest\bin\Debug\net7.0\runtimes\win\lib\net6.0\System.Security.Cryptography.ProtectedData.dll
 C:\Users\Isac\Desktop\FastRest\Codigo\FastRest\FastRest\bin\Debug\net7.0\runtimes\win\lib\net6.0\System.Windows.Extensions.dll
+C:\Users\Isac\Desktop\FastRest\Codigo\FastRest\FastRest\bin\Debug\net7.0\MySqlConnector.dll
+C:\Users\Isac\Desktop\FastRest\Codigo\FastRest\FastRest\bin\Debug\net7.0\Pomelo.EntityFrameworkCore.MySql.dll

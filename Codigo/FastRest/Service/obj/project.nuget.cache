@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "9FZ+Jfu8iAZVm6UjpoyMPcGGl3BatiYZjf8r/EtAf+WpRlvBe2JfUePTwVc4ZXh32xPTW44OK0+7iRN2VPfolA==",
+  "dgSpecHash": "yVAdkdqrCpiYfVaFzIL55MUsTujbgHmpKfvFgqCUQ1xME7V+ZamUg4TZ9u2Wmw8xhAiZXZ9DXryl6LKuyO7I3w==",
   "success": true,
   "projectFilePath": "C:\\Users\\Isac\\Desktop\\FastRest\\Codigo\\FastRest\\Service\\Service.csproj",
   "expectedPackageFiles": [
@@ -32,6 +32,8 @@
     "C:\\Users\\Isac\\.nuget\\packages\\mono.texttemplating\\2.2.1\\mono.texttemplating.2.2.1.nupkg.sha512",
     "C:\\Users\\Isac\\.nuget\\packages\\mysql.data\\8.4.0\\mysql.data.8.4.0.nupkg.sha512",
     "C:\\Users\\Isac\\.nuget\\packages\\mysql.entityframeworkcore\\7.0.16\\mysql.entityframeworkcore.7.0.16.nupkg.sha512",
+    "C:\\Users\\Isac\\.nuget\\packages\\mysqlconnector\\2.2.5\\mysqlconnector.2.2.5.nupkg.sha512",
+    "C:\\Users\\Isac\\.nuget\\packages\\pomelo.entityframeworkcore.mysql\\7.0.0\\pomelo.entityframeworkcore.mysql.7.0.0.nupkg.sha512",
     "C:\\Users\\Isac\\.nuget\\packages\\system.buffers\\4.5.1\\system.buffers.4.5.1.nupkg.sha512",
     "C:\\Users\\Isac\\.nuget\\packages\\system.codedom\\4.4.0\\system.codedom.4.4.0.nupkg.sha512",
     "C:\\Users\\Isac\\.nuget\\packages\\system.configuration.configurationmanager\\4.4.1\\system.configuration.configurationmanager.4.4.1.nupkg.sha512",

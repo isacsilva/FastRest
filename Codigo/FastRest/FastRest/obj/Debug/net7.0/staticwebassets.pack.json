@@ -5,12 +5,28 @@
       "PackagePath": "staticwebassets\\FastRest.bundle.scp.css"
     },
     {
+      "Id": "C:\\Users\\Isac\\Desktop\\FastRest\\Codigo\\FastRest\\FastRest\\wwwroot\\css\\cart.css",
+      "PackagePath": "staticwebassets\\css\\cart.css"
+    },
+    {
+      "Id": "C:\\Users\\Isac\\Desktop\\FastRest\\Codigo\\FastRest\\FastRest\\wwwroot\\css\\product-list.css",
+      "PackagePath": "staticwebassets\\css\\product-list.css"
+    },
+    {
       "Id": "C:\\Users\\Isac\\Desktop\\FastRest\\Codigo\\FastRest\\FastRest\\wwwroot\\css\\site.css",
       "PackagePath": "staticwebassets\\css\\site.css"
     },
     {
       "Id": "C:\\Users\\Isac\\Desktop\\FastRest\\Codigo\\FastRest\\FastRest\\wwwroot\\favicon.ico",
       "PackagePath": "staticwebassets\\favicon.ico"
+    },
+    {
+      "Id": "C:\\Users\\Isac\\Desktop\\FastRest\\Codigo\\FastRest\\FastRest\\wwwroot\\images\\dine_in.png",
+      "PackagePath": "staticwebassets\\images\\dine_in.png"
+    },
+    {
+      "Id": "C:\\Users\\Isac\\Desktop\\FastRest\\Codigo\\FastRest\\FastRest\\wwwroot\\images\\takeway.png",
+      "PackagePath": "staticwebassets\\images\\takeway.png"
     },
     {
       "Id": "C:\\Users\\Isac\\Desktop\\FastRest\\Codigo\\FastRest\\FastRest\\wwwroot\\js\\site.js",
