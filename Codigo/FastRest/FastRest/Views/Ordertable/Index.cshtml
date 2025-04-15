@@ -1,63 +1,46 @@
 ﻿@model IEnumerable<FastRest.Models.OrdertableModel>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Meus Pedidos";
+    var textInfo = System.Globalization.CultureInfo.CurrentCulture.TextInfo;
 }
 
-<h1>Pedidos</h1>
+<link rel="stylesheet" href="~/css/orders.css" />
 
-@if (TempData["CreateStatus"] != null)
-{
-    <div class="alert alert-info"> @TempData["CreateStatus"] </div>
-}
+<div class="orders-container">
+<h2 class="orders-title">🧾 Meus Pedidos</h2>
+<div id="pedidos-list">
+    @foreach (var pedido in Model)
+    {
+        <div class="order-card" data-id="@pedido.Id">
+            <span class="order-status @pedido.Status.ToLower()">
+                @textInfo.ToTitleCase(pedido.Status.Replace("_", " ").ToLower())
+            </span>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Id)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Total)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Status)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ConsumptionMethod)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.RestaurantId)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Id)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Total)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Status)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ConsumptionMethod)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.RestaurantId)
-            </td>
-            <td> 
-                    <a asp-action="Edit" asp-route-id="@item.Id" asp-route-status="IN_PREPARATION" class="btn btn-warning btn-sm">Em preparo</a>
-                    <a asp-action="Edit" asp-route-id="@item.Id" asp-route-status="FINISHED" class="btn btn-success btn-sm">Finalizar</a>
-            </td>
-        </tr>
+            <div class="order-info">
+                <p><strong>Pedido #@pedido.Id</strong></p>
+                <p>Total: <strong>R$ @pedido.Total.ToString("N2")</strong></p>
+                <p>Criado em: @pedido.CreatedAt?.ToString("dd/MM/yyyy HH:mm")</p>
+            </div>
+        </div>
+    }
+</div>
+</div>
+
+@section Scripts {
+    <script>
+        const socket = new WebSocket("ws://localhost:5050");
+
+        socket.onmessage = function (event) {
+            const update = JSON.parse(event.data);
+
+            const card = document.querySelector(`[data-id='${update.id}']`);
+            if (card) {
+                const statusSpan = card.querySelector('.order-status');
+                const status = update.status.replace("_", " ").toLowerCase();
+                statusSpan.textContent = status.replace(/\b\w/g, l => l.toUpperCase());
+                statusSpan.className = "order-status " + update.status.toLowerCase();
+            }
+        };
+    </script>
 }
-    </tbody>
-</table>

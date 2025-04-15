@@ -35,5 +35,7 @@ namespace FastRest.Models
         [Display(Name = "Numero da Categoria:")]
         [Required(ErrorMessage = "Numero categoria da Farmácia é obrigatório")]
         public int MenuCategoryId { get; set; }
+        
+        public ProductModel Product { get; set; }
     }
 }
